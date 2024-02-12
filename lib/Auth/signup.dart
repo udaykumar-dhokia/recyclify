@@ -11,6 +11,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  bool isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,7 +132,26 @@ class _SignUpState extends State<SignUp> {
 
   TextFormField _textField(String name) {
     return TextFormField(
+      obscureText: name == "Password" ? isObscure : false,
       decoration: InputDecoration(
+        suffixIcon: name == "Password"
+            ? GestureDetector(
+                onTap: () {
+                  setState(
+                    () {
+                      isObscure = !isObscure;
+                    },
+                  );
+                },
+                child: !isObscure
+                    ? const Icon(
+                        Icons.visibility,
+                      )
+                    : const Icon(
+                        Icons.visibility_off,
+                      ),
+              )
+            : null,
         label: Text(name),
         labelStyle: TextStyle(fontFamily: font, color: Colors.grey.shade800),
         focusedBorder: OutlineInputBorder(
