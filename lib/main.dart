@@ -1,10 +1,14 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:recyclify/Auth/signup.dart';
+import 'package:recyclify/Auth/auth.dart';
 import 'package:recyclify/Constants/colors.dart';
+import 'package:recyclify/firebase_options.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -35,7 +39,7 @@ class _SplashState extends State<Splash> {
     Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const SignUp()),
+        MaterialPageRoute(builder: (context) => const Auth()),
       );
     });
   }
