@@ -24,19 +24,22 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String _locationMessage = '';
   bool isObscure = true;
-  double long = 0.0;
-  double lat = 0.0;
+  var long;
+  var lat;
   final _username = TextEditingController();
   final _email = TextEditingController();
   final _password = TextEditingController();
+  final _mobile = TextEditingController();
   bool success = false;
 
   getLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
-      log("Denied");
       LocationPermission ask = await Geolocator.requestPermission();
+      while(ask != LocationPermission.always){
+        ask = await Geolocator.requestPermission();
+      }
     } else {
       Position currentPosition = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
@@ -46,8 +49,8 @@ class _SignUpState extends State<SignUp> {
           .then((place) {
         if (place.isNotEmpty) {
           setState(() {
-            long = currentPosition.longitude;
-            lat = currentPosition.latitude;
+            long = currentPosition.longitude.toString();
+            lat = currentPosition.latitude.toString();
           });
           log(place[0].toString());
           setState(() {
@@ -123,8 +126,9 @@ class _SignUpState extends State<SignUp> {
         : Scaffold(
             body: SafeArea(
               child: SingleChildScrollView(
+                physics: ClampingScrollPhysics(),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
+                  padding: const EdgeInsets.only(top: 40, left: 15, right: 15, bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -164,6 +168,27 @@ class _SignUpState extends State<SignUp> {
                       const SizedBox(height: 20),
                       TextFormField(
                         cursorColor: primaryColor,
+                        controller: _mobile,
+                        maxLength: 10,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          label: const Text("Mobile"),
+                          labelStyle: TextStyle(
+                              fontFamily: font, color: Colors.grey.shade800),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        cursorColor: primaryColor,
                         controller: _email,
                         decoration: InputDecoration(
                           label: const Text("Email"),
@@ -184,7 +209,7 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         cursorColor: primaryColor,
                         controller: _password,
-                        obscureText: false,
+                        obscureText: isObscure? true : false,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
                             onTap: () {
@@ -221,7 +246,8 @@ class _SignUpState extends State<SignUp> {
                         onTap: () {
                           if (_username.text.isEmpty ||
                               _email.text.isEmpty ||
-                              _password.text.isEmpty) {
+                              _password.text.isEmpty || _mobile.text.isEmpty
+                          ) {
                             toast(
                               context,
                               ToastificationType.error,
@@ -235,7 +261,9 @@ class _SignUpState extends State<SignUp> {
                               "password": _password.text.toString(),
                               "address": _locationMessage,
                               "long": long,
-                              "lat": lat
+                              "lat": lat,
+                              "mobile": _mobile.text.toString(),
+                              "total_orders":""
                             };
                             signup(_email.text, _password.text, data);
                           }

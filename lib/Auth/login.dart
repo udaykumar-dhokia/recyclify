@@ -38,10 +38,6 @@ class _LoginState extends State<Login> {
       setState(() {
         success = false;
       });
-      User? user = FirebaseAuth.instance.currentUser;
-      log(user!.email.toString());
-      final db = FirebaseFirestore.instance.collection("user");
-      await db.doc(user.email).set(data);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -63,16 +59,19 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: success
-            ? const Center(
-                child: SpinKitWaveSpinner(
-                  color: Colors.green,
-                  size: 50,
-                ),
-              )
-            : SingleChildScrollView(
+    return success
+        ? const Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: SpinKitWaveSpinner(
+                color: Colors.green,
+                size: 50,
+              ),
+            ),
+          )
+        : Scaffold(
+            body: SafeArea(
+              child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 40, left: 15, right: 15),
                   child: Column(
@@ -273,7 +272,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-      ),
-    );
+            ),
+          );
   }
 }
