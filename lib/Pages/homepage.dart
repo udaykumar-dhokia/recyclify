@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:recyclify/Auth/auth.dart';
 import 'package:recyclify/Constants/colors.dart';
 import 'package:recyclify/Constants/fonts.dart';
@@ -17,6 +19,36 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   List<String> userData = [];
+  String address = "";
+
+  getLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      LocationPermission ask = await Geolocator.requestPermission();
+      while (ask != LocationPermission.always ||
+          ask != LocationPermission.whileInUse) {
+        ask = await Geolocator.requestPermission();
+      }
+    } else {
+      Position currentPosition = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      placemarkFromCoordinates(
+              currentPosition.latitude, currentPosition.longitude)
+          .then((place) async {
+        if (place.isNotEmpty) {
+          log(place.toString());
+          setState(
+            () {
+              address =
+                  "${place[0].street}, ${place[0].locality}, ${place[0].administrativeArea}, ${place[0].country}, ${place[0].postalCode}";
+            },
+          );
+        }
+      });
+    }
+  }
 
   Future<void> getData() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -40,6 +72,7 @@ class _HomepageState extends State<Homepage> {
     // TODO: implement initState
     super.initState();
     getData();
+    getLocation();
   }
 
   @override
@@ -50,11 +83,14 @@ class _HomepageState extends State<Homepage> {
             body: Center(
               child: SpinKitWaveSpinner(
                 color: primaryColor,
+                waveColor: primaryColor,
               ),
             ),
           )
         : Scaffold(
+            backgroundColor: white,
             appBar: AppBar(
+              backgroundColor: white,
               toolbarHeight: 100,
               title: Column(
                 children: [
@@ -76,19 +112,19 @@ class _HomepageState extends State<Homepage> {
                   Row(
                     children: [
                       Expanded(
-                        child: userData[1].isEmpty
+                        child: address.isEmpty
                             ? Text(
                                 "⚲ No location selected",
                                 style: TextStyle(
-                                    fontFamily: font,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.035),
+                                  fontFamily: font,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.035,
+                                ),
                               )
                             : Tooltip(
-                                message: userData[1],
+                                message: address,
                                 child: Text(
-                                  "⚲ ${userData[1]}",
+                                  "⚲ ${address}",
                                   style: TextStyle(
                                       fontFamily: font,
                                       fontSize:

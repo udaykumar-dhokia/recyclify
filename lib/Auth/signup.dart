@@ -31,6 +31,7 @@ class _SignUpState extends State<SignUp> {
   final _password = TextEditingController();
   final _mobile = TextEditingController();
   bool success = false;
+  bool _numberExists = false;
 
   getLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
@@ -61,6 +62,36 @@ class _SignUpState extends State<SignUp> {
       });
     }
   }
+
+  Future<void> _checkNumberExistence() async {
+    try{
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('user')
+          .where('mobile', isEqualTo: "9537527143")
+          .get();
+
+      if (_numberExists) {
+        print("Mobile numbers found:");
+        querySnapshot.docs.forEach((doc) {
+          final mobile = doc.data();
+          if (mobile != null) {
+            print(mobile);
+          }
+        });
+      } else {
+        print("No user found with the provided mobile number.");
+      }
+      setState(() {
+        _numberExists = querySnapshot.docs == "9537527143";
+      });
+      log(_numberExists.toString());
+    } catch (e) {
+      setState(() {
+        _numberExists = false;
+      });
+    }
+  }
+
 
   Future<void> signup(
       String email, String password, Map<String, dynamic> data) async {
@@ -110,6 +141,7 @@ class _SignUpState extends State<SignUp> {
     // TODO: implement initState
     super.initState();
     getLocation();
+    _checkNumberExistence();
   }
 
   @override
@@ -265,6 +297,13 @@ class _SignUpState extends State<SignUp> {
                               "mobile": _mobile.text.toString(),
                               "total_orders":""
                             };
+                            // _checkNumberExistence(_mobile.text);
+                            _numberExists == true ? toast(
+                              context,
+                              ToastificationType.success,
+                              "Error!",
+                              "Mobile number already exist...",
+                            ) :
                             signup(_email.text, _password.text, data);
                           }
                         },

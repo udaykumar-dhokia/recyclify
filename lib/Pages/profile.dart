@@ -76,7 +76,7 @@ class _ProfileState extends State<Profile> {
         }
       });
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Bottombar()));
+          context, MaterialPageRoute(builder: (context) => const Bottombar()));
     }
   }
 
@@ -111,7 +111,7 @@ class _ProfileState extends State<Profile> {
 
   Navigate() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Profile()));
+        context, MaterialPageRoute(builder: (context) => const Profile()));
   }
 
   @override
@@ -122,7 +122,7 @@ class _ProfileState extends State<Profile> {
   }
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     User? user = FirebaseAuth.instance.currentUser;
     final ref = FirebaseFirestore.instance
         .collection("user")
@@ -148,21 +148,28 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return name.isEmpty
-        ? const Center(
-            child: SpinKitWaveSpinner(
-              color: primaryColor,
+        ? const Scaffold(
+      backgroundColor: white,
+          body: Center(
+              child: SpinKitWaveSpinner(
+                color: primaryColor,
+                waveColor: primaryColor,
+              ),
             ),
-          )
+        )
         : SmartRefresher(
             controller: _refreshController,
             onRefresh: _onRefresh,
             enablePullDown: true,
             enablePullUp: false,
-            header: WaterDropMaterialHeader(
+            header: const WaterDropMaterialHeader(
               backgroundColor: primaryColor,
             ),
             child: Scaffold(
+              backgroundColor: white,
               appBar: AppBar(
+                surfaceTintColor: white,
+                backgroundColor: white,
                 toolbarHeight: 100,
                 actions: [
                   IconButton(
@@ -190,7 +197,7 @@ class _ProfileState extends State<Profile> {
                           margin: const EdgeInsets.only(
                             bottom: 10,
                           ),
-                          height: MediaQuery.of(context).size.height / 4,
+                          height: MediaQuery.of(context).size.height / 5,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
@@ -286,147 +293,160 @@ class _ProfileState extends State<Profile> {
                                         _email,
                                         _name,
                                         _address,
-                                        () {});
+                                        () {
+                                          getData();
+                                        });
                                   },
                                   minHeight: 0,
-                                  initHeight: 0.5,
+                                  initHeight: 0.6,
                                   maxHeight: 1,
                                   isSafeArea: true,
                                 );
                                 getData();
                               },
-                              icon: Icon(Icons.edit_note_sharp),
+                              icon: const Icon(Icons.edit_note_sharp),
                             )
                           ],
                         ),
                         const SizedBox(
                           height: 20,
                         ),
+                        _details(context,name, Icons.person),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _details(context, email, Icons.email),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _details(context, mobile, Icons.phone),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _details(context, address, Icons.location_on),
                         //Name
-                        TextFormField(
-                          readOnly: true,
-                          initialValue: name,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.person,
-                              color: primaryColor,
-                            ),
-                            // label: const Text("Name"),
-                            labelStyle: const TextStyle(color: Colors.black),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        // TextFormField(
+                        //   readOnly: true,
+                        //   initialValue: name,
+                        //   decoration: InputDecoration(
+                        //     prefixIcon: const Icon(
+                        //       Icons.person,
+                        //       color: primaryColor,
+                        //     ),
+                        //     // label: const Text("Name"),
+                        //     labelStyle: const TextStyle(color: Colors.black),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(15),
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //     ),
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     border: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(15),
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //     ),
+                        //   ),
+                        // ),
+
                         //Email
-                        TextFormField(
-                          readOnly: true,
-                          initialValue: email,
-                          decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.email, color: primaryColor),
-                            // label: const Text("Email"),
-                            labelStyle: const TextStyle(color: Colors.black),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
+                        // TextFormField(
+                        //   readOnly: true,
+                        //   initialValue: email,
+                        //   decoration: InputDecoration(
+                        //     prefixIcon:
+                        //         const Icon(Icons.email, color: primaryColor),
+                        //     // label: const Text("Email"),
+                        //     labelStyle: const TextStyle(color: Colors.black),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     border: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //   ),
+                        // ),
                         const SizedBox(
                           height: 10,
                         ),
-                        TextFormField(
-                          readOnly: true,
-                          initialValue: mobile,
-                          decoration: InputDecoration(
-                            prefixIcon:
-                                const Icon(Icons.phone, color: primaryColor),
-                            // label: const Text("Email"),
-                            labelStyle: const TextStyle(color: Colors.black),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
+                        // TextFormField(
+                        //   readOnly: true,
+                        //   initialValue: mobile,
+                        //   decoration: InputDecoration(
+                        //     prefixIcon:
+                        //         const Icon(Icons.phone, color: primaryColor),
+                        //     // label: const Text("Email"),
+                        //     labelStyle: const TextStyle(color: Colors.black),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     border: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //   ),
+                        // ),
                         const SizedBox(
                           height: 10,
                         ),
                         //Address
-                        TextFormField(
-                          style: const TextStyle(color: Colors.black),
-                          readOnly: true,
-                          initialValue: address.isEmpty
-                              ? "No location selected"
-                              : address,
-                          decoration: InputDecoration(
-                            suffixIcon: address.isEmpty
-                                ? IconButton(
-                                    onPressed: () {
-                                      getLocation();
-                                    },
-                                    icon: const Icon(
-                                        Icons.location_searching_sharp))
-                                : null,
-                            prefixIcon: const Icon(Icons.location_on,
-                                color: primaryColor),
-                            // label: const Text("Address"),
-                            labelStyle: const TextStyle(color: Colors.black),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
+                        // TextFormField(
+                        //   style: const TextStyle(color: Colors.black),
+                        //   readOnly: true,
+                        //   initialValue: address.isEmpty
+                        //       ? "No location selected"
+                        //       : address,
+                        //   decoration: InputDecoration(
+                        //     suffixIcon: address.isEmpty
+                        //         ? IconButton(
+                        //             onPressed: () {
+                        //               getLocation();
+                        //             },
+                        //             icon: const Icon(
+                        //                 Icons.location_searching_sharp))
+                        //         : null,
+                        //     prefixIcon: const Icon(Icons.location_on,
+                        //         color: primaryColor),
+                        //     // label: const Text("Address"),
+                        //     labelStyle: const TextStyle(color: Colors.black),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //     border: OutlineInputBorder(
+                        //       borderSide: const BorderSide(
+                        //           color: Colors.grey, width: 0.2),
+                        //       borderRadius: BorderRadius.circular(15),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -434,6 +454,47 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           );
+  }
+
+  Container _details(BuildContext context, String title, IconData icon) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(width: 0.2),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Icon(
+                    icon,
+                    color: primaryColor,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                 Flexible(
+                   child: Text(
+                        title,
+                        style: TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                            fontFamily: font,
+                            fontSize: MediaQuery.of(context).size.width * 0.04),
+                      ),
+                 ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -451,6 +512,7 @@ Widget _buildBottomSheet(
 ) {
   return Material(
     child: Scaffold(
+      backgroundColor: white,
       body: Padding(
         padding:
             const EdgeInsets.only(top: 25, left: 10, right: 10, bottom: 25),
@@ -528,8 +590,8 @@ Widget _buildBottomSheet(
                     'address':
                         _address.text.isNotEmpty ? _address.text : address,
                   });
-                  toast(context, ToastificationType.success, "Address selected",
-                      "Succussfully select the address");
+                  toast(context, ToastificationType.success, "Details updated",
+                      "Succussfully updated your new details");
                   onSheetClosed();
                   Navigator.pop(context);
                 }
@@ -548,7 +610,7 @@ Widget _buildBottomSheet(
                         fontFamily: font,
                         color: white,
                         fontSize: MediaQuery.of(context).size.width * 0.04),
-                  )),
+                  ),),
                 ),
               ),
             ),
