@@ -110,7 +110,7 @@ class _HomepageState extends State<Homepage> {
     return userData.isEmpty
         ? Scaffold(
             backgroundColor: darkMode? Colors.black87 : white,
-            body: Center(
+            body: const Center(
               child: SpinKitWaveSpinner(
                 color: primaryColor,
                 waveColor: primaryColor,
@@ -242,10 +242,11 @@ class _HomepageState extends State<Homepage> {
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.05),
                           ),
+                          const SizedBox(height: 20,),
                           Padding(
                             padding: const EdgeInsets.only(top: 20),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 GestureDetector(
                                   child: Container(
@@ -260,16 +261,16 @@ class _HomepageState extends State<Homepage> {
                                                 BorderRadius.circular(15),
                                           ),
                                           child: CircleAvatar(
-                                            radius: 80,
-                                            child: ClipOval(
-                                                child: Opacity(
+                                            backgroundColor: Colors.transparent,
+                                            radius: 50,
+                                            child: Opacity(
                                               opacity:
                                                   selected == "paper" ? 1 : 0.5,
                                               child: const Image(
                                                 image: NetworkImage(
-                                                    "https://img.freepik.com/premium-vector/newspaper-news-cartoon-vector-illustration-weekly-daily-newspaper-with-articles-flat-icon-outline_385450-1511.jpg"),
-                                                fit: BoxFit.cover,
-                                              ),
+                                                  "https://github.com/udaykumar-dhokia/recyclify/blob/main/lib/Assets/Icons/bin.png?raw=true"),
+                                                    // "https://img.freepik.com/premium-vector/newspaper-news-cartoon-vector-illustration-weekly-daily-newspaper-with-articles-flat-icon-outline_385450-1511.jpg"),
+                                                fit: BoxFit.fill,
                                             )),
                                           ),
                                         ),
@@ -295,16 +296,16 @@ class _HomepageState extends State<Homepage> {
                                                 BorderRadius.circular(15),
                                           ),
                                           child: CircleAvatar(
-                                            radius: 80,
-                                            child: ClipOval(
-                                              child: Opacity(
+                                            backgroundColor: Colors.transparent,
+                                            radius: 50,
+                                            child: Opacity(
                                                 opacity: selected == "plastic"
                                                     ? 1
                                                     : 0.5,
                                                 child: const Image(
                                                   image: NetworkImage(
-                                                      "https://img.freepik.com/free-vector/plastic-pollution-concept-illustration_114360-14999.jpg?size=338&ext=jpg&ga=GA1.1.735520172.1710460800&semt=ais"),
-                                                ),
+                                                    "https://github.com/udaykumar-dhokia/recyclify/blob/main/lib/Assets/Icons/water-bottle.png?raw=true"),
+                                                      // "https://img.freepik.com/free-vector/plastic-pollution-concept-illustration_114360-14999.jpg?size=338&ext=jpg&ga=GA1.1.735520172.1710460800&semt=ais"),
                                               ),
                                             ),
                                           ),
