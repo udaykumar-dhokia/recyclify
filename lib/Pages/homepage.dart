@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:recyclify/Auth/auth.dart';
 import 'package:recyclify/Constants/colors.dart';
 import 'package:recyclify/Constants/fonts.dart';
+import 'package:recyclify/Extras/address.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -20,32 +21,40 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List<String> userData = [];
   String address = "";
+  bool _functionCalled = false;
 
   getLocation() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      LocationPermission ask = await Geolocator.requestPermission();
-      while (ask != LocationPermission.always ||
-          ask != LocationPermission.whileInUse) {
-        ask = await Geolocator.requestPermission();
-      }
-    } else {
-      Position currentPosition = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-
-      placemarkFromCoordinates(
-              currentPosition.latitude, currentPosition.longitude)
-          .then((place) async {
-        if (place.isNotEmpty) {
-          log(place.toString());
-          setState(
-            () {
-              address =
-                  "${place[0].street}, ${place[0].locality}, ${place[0].administrativeArea}, ${place[0].country}, ${place[0].postalCode}";
-            },
-          );
+    if (!_functionCalled) {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        LocationPermission ask = await Geolocator.requestPermission();
+        while (ask != LocationPermission.always ||
+            ask != LocationPermission.whileInUse) {
+          ask = await Geolocator.requestPermission();
         }
+      } else {
+        Position currentPosition = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+
+        placemarkFromCoordinates(
+                currentPosition.latitude, currentPosition.longitude)
+            .then((place) async {
+          if (place.isNotEmpty) {
+            log(place.toString());
+            setState(
+              () {
+                curr_address =
+                    "${place[0].street}, ${place[0].locality}, ${place[0].administrativeArea}, ${place[0].country}, ${place[0].postalCode}";
+                address =
+                    "${place[0].street}, ${place[0].locality}, ${place[0].administrativeArea}, ${place[0].country}, ${place[0].postalCode}";
+              },
+            );
+          }
+        });
+      }
+      setState(() {
+        _functionCalled = true;
       });
     }
   }
@@ -90,7 +99,9 @@ class _HomepageState extends State<Homepage> {
         : Scaffold(
             backgroundColor: white,
             appBar: AppBar(
-              backgroundColor: white,
+              backgroundColor: primaryColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
               toolbarHeight: 100,
               title: Column(
                 children: [
@@ -98,9 +109,10 @@ class _HomepageState extends State<Homepage> {
                     children: [
                       Expanded(
                         child: Text(
-                          userData[0],
+                          'Current Location',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
+                              color: white,
                               fontFamily: font,
                               fontWeight: FontWeight.bold,
                               fontSize:
@@ -116,16 +128,18 @@ class _HomepageState extends State<Homepage> {
                             ? Text(
                                 "⚲ No location selected",
                                 style: TextStyle(
+                                  color: Colors.white60,
                                   fontFamily: font,
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.035,
                                 ),
                               )
                             : Tooltip(
-                                message: address,
+                                message: curr_address,
                                 child: Text(
                                   "⚲ ${address}",
                                   style: TextStyle(
+                                      color: Colors.white60,
                                       fontFamily: font,
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -150,6 +164,7 @@ class _HomepageState extends State<Homepage> {
                   },
                   icon: const Icon(
                     Icons.logout_rounded,
+                    color: white,
                   ),
                 )
               ],

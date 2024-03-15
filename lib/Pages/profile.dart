@@ -200,7 +200,8 @@ class _ProfileState extends State<Profile> {
                           height: MediaQuery.of(context).size.height / 5,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: Colors.grey[200],
+                            // color: Colors.grey[200],
+                            color: primaryColor,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Padding(
@@ -235,6 +236,7 @@ class _ProfileState extends State<Profile> {
                                             name,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
+                                              color: white,
                                               fontFamily: font,
                                               fontWeight: FontWeight.bold,
                                               fontSize: MediaQuery.of(context)
@@ -247,6 +249,7 @@ class _ProfileState extends State<Profile> {
                                             email,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
+                                              color: Colors.white60,
                                               fontFamily: font,
                                               fontSize: MediaQuery.of(context)
                                                       .size
@@ -324,129 +327,6 @@ class _ProfileState extends State<Profile> {
                           height: 10,
                         ),
                         _details(context, address, Icons.location_on),
-                        //Name
-                        // TextFormField(
-                        //   readOnly: true,
-                        //   initialValue: name,
-                        //   decoration: InputDecoration(
-                        //     prefixIcon: const Icon(
-                        //       Icons.person,
-                        //       color: primaryColor,
-                        //     ),
-                        //     // label: const Text("Name"),
-                        //     labelStyle: const TextStyle(color: Colors.black),
-                        //     focusedBorder: OutlineInputBorder(
-                        //       borderRadius: BorderRadius.circular(15),
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //     ),
-                        //     enabledBorder: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //     border: OutlineInputBorder(
-                        //       borderRadius: BorderRadius.circular(15),
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //     ),
-                        //   ),
-                        // ),
-
-                        //Email
-                        // TextFormField(
-                        //   readOnly: true,
-                        //   initialValue: email,
-                        //   decoration: InputDecoration(
-                        //     prefixIcon:
-                        //         const Icon(Icons.email, color: primaryColor),
-                        //     // label: const Text("Email"),
-                        //     labelStyle: const TextStyle(color: Colors.black),
-                        //     focusedBorder: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //     enabledBorder: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //     border: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //   ),
-                        // ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        // TextFormField(
-                        //   readOnly: true,
-                        //   initialValue: mobile,
-                        //   decoration: InputDecoration(
-                        //     prefixIcon:
-                        //         const Icon(Icons.phone, color: primaryColor),
-                        //     // label: const Text("Email"),
-                        //     labelStyle: const TextStyle(color: Colors.black),
-                        //     focusedBorder: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //     enabledBorder: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //     border: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //   ),
-                        // ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        //Address
-                        // TextFormField(
-                        //   style: const TextStyle(color: Colors.black),
-                        //   readOnly: true,
-                        //   initialValue: address.isEmpty
-                        //       ? "No location selected"
-                        //       : address,
-                        //   decoration: InputDecoration(
-                        //     suffixIcon: address.isEmpty
-                        //         ? IconButton(
-                        //             onPressed: () {
-                        //               getLocation();
-                        //             },
-                        //             icon: const Icon(
-                        //                 Icons.location_searching_sharp))
-                        //         : null,
-                        //     prefixIcon: const Icon(Icons.location_on,
-                        //         color: primaryColor),
-                        //     // label: const Text("Address"),
-                        //     labelStyle: const TextStyle(color: Colors.black),
-                        //     focusedBorder: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //     enabledBorder: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //     border: OutlineInputBorder(
-                        //       borderSide: const BorderSide(
-                        //           color: Colors.grey, width: 0.2),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

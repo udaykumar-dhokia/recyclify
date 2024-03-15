@@ -35,15 +35,15 @@ class _LoginState extends State<Login> {
         email: _email,
         password: _password,
       );
-      setState(() {
-        success = false;
-      });
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => const Bottombar(),
         ),
       );
+      setState(() {
+        success = false;
+      });
     } catch (e) {
       toast(
         context,
@@ -64,7 +64,8 @@ class _LoginState extends State<Login> {
             backgroundColor: Colors.white,
             body: Center(
               child: SpinKitWaveSpinner(
-                color: Colors.green,
+                color: primaryColor,
+                waveColor: primaryColor,
                 size: 50,
               ),
             ),
@@ -114,7 +115,7 @@ class _LoginState extends State<Login> {
                       TextFormField(
                         cursorColor: primaryColor,
                         controller: _password,
-                        obscureText: false,
+                        obscureText: isObscure,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
                             onTap: () {

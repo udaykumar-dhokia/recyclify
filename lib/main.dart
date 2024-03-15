@@ -47,6 +47,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: primaryColor,
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 10),
         child: Row(
@@ -54,15 +55,15 @@ class _SplashState extends State<Splash> {
           children: [
             Text(
               "Made with ",
-              style: TextStyle(fontFamily: "Sans Serif", fontSize: 15),
+              style: TextStyle(fontFamily: "Sans Serif", fontSize: 15, color: Colors.white60),
             ),
             Icon(
               Icons.favorite,
-              color: primaryColor,
+              color: white,
             ),
             Text(
               " in India.",
-              style: TextStyle(fontFamily: "Sans Serif", fontSize: 15),
+              style: TextStyle(fontFamily: "Sans Serif", fontSize: 15, color: Colors.white60),
             ),
           ],
         ),
@@ -73,6 +74,7 @@ class _SplashState extends State<Splash> {
           style: TextStyle(
             fontFamily: "Sans Serif",
             fontSize: 40,
+            color: white,
           ),
         ),
       ),

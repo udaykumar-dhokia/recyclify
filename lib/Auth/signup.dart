@@ -104,9 +104,6 @@ class _SignUpState extends State<SignUp> {
         email: email,
         password: password,
       );
-      setState(() {
-        success = false;
-      });
       User? user = FirebaseAuth.instance.currentUser;
       log(user!.email.toString());
       final db = FirebaseFirestore.instance.collection("user");
@@ -123,6 +120,9 @@ class _SignUpState extends State<SignUp> {
           builder: (context) => const Bottombar(),
         ),
       );
+      setState(() {
+        success = false;
+      });
     } catch (e) {
       toast(
         context,
@@ -151,6 +151,7 @@ class _SignUpState extends State<SignUp> {
             body: Center(
               child: SpinKitWaveSpinner(
                 color: primaryColor,
+                waveColor: primaryColor,
                 size: 50,
               ),
             ),
