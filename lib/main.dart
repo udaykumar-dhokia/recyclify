@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recyclify/Auth/auth.dart';
 import 'package:recyclify/Constants/colors.dart';
 import 'package:recyclify/firebase_options.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Splash(),

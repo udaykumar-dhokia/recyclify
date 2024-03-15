@@ -22,6 +22,25 @@ class _HomepageState extends State<Homepage> {
   List<String> userData = [];
   String address = "";
   bool _functionCalled = false;
+  String greeting = "";
+  String selected = "paper";
+
+  void greet() {
+    var hour = DateTime.now().hour;
+    if (hour >= 6 && hour < 12) {
+      setState(() {
+        greeting = "Good morning";
+      });
+    } else if (hour >= 12 && hour < 17) {
+      setState(() {
+        greeting = "Good afternoon";
+      });
+    } else {
+      setState(() {
+        greeting = "Good evening";
+      });
+    }
+  }
 
   getLocation() async {
     if (!_functionCalled) {
@@ -82,6 +101,7 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     getData();
     getLocation();
+    greet();
   }
 
   @override
@@ -169,10 +189,139 @@ class _HomepageState extends State<Homepage> {
                 )
               ],
             ),
-            body: const SafeArea(
+            body: SafeArea(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: Column(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(
+                          left: 10, right: 10, top: 30, bottom: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${greeting},",
+                            style: TextStyle(
+                                fontFamily: font,
+                                color: Colors.black54,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.05),
+                          ),
+                          Text(userData[0],
+                              style: TextStyle(
+                                fontFamily: font,
+                                color: Colors.black,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.07,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 10, bottom: 10),
+                      // height: MediaQuery.of(context).size.height / 4,
+                      width: MediaQuery.of(context).size.height,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: primaryLightColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "what do you want to recyclify.",
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontFamily: font,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.05),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            30,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: CircleAvatar(
+                                            radius: 80,
+                                            child: ClipOval(
+                                                child: Opacity(
+                                                  opacity: selected == "paper"? 1 : 0.5,
+                                                  child: const Image(
+                                                                                                image: NetworkImage(
+                                                    "https://img.freepik.com/premium-vector/newspaper-news-cartoon-vector-illustration-weekly-daily-newspaper-with-articles-flat-icon-outline_385450-1511.jpg"),
+                                                                                                fit: BoxFit.cover,
+                                                                                              ),
+                                                )),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      selected = "paper";
+                                    });
+                                  },
+                                ),
+                                GestureDetector(
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            30,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: CircleAvatar(
+                                            radius: 80,
+                                            child: ClipOval(
+                                              child: Opacity(
+                                                opacity: selected == "plastic"? 1 : 0.5,
+                                                child: const Image(
+                                                  image: NetworkImage(
+                                                      "https://img.freepik.com/free-vector/plastic-pollution-concept-illustration_114360-14999.jpg?size=338&ext=jpg&ga=GA1.1.735520172.1710460800&semt=ais"),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      selected = "plastic";
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

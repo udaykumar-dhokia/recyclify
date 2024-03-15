@@ -13,7 +13,6 @@ import 'package:recyclify/Bottombar/bottombar.dart';
 import 'package:recyclify/Components/toast.dart';
 import 'package:recyclify/Constants/colors.dart';
 import 'package:recyclify/Constants/fonts.dart';
-import 'package:simple_icons/simple_icons.dart';
 import 'package:toastification/toastification.dart';
 
 class Profile extends StatefulWidget {

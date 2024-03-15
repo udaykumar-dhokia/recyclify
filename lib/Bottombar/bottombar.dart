@@ -20,7 +20,7 @@ class _BottombarState extends State<Bottombar> {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        backgroundColor: Colors.white,
+        backgroundColor: primaryShadeColor,
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
