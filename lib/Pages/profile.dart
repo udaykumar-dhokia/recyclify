@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:recyclify/Bottombar/bottombar.dart';
+import 'package:recyclify/Components/Bottombar/bottombar.dart';
 import 'package:recyclify/Components/toast.dart';
 import 'package:recyclify/Constants/colors.dart';
 import 'package:recyclify/Constants/fonts.dart';
+import 'package:recyclify/Extras/variables.dart';
 import 'package:toastification/toastification.dart';
 
 class Profile extends StatefulWidget {
@@ -134,6 +134,7 @@ class _ProfileState extends State<Profile> {
         email = data["email"];
         address = data["address"];
         mobile = data["mobile"];
+        darkMode = data["darkTheme"];
       });
     });
 
@@ -147,15 +148,15 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return name.isEmpty
-        ? const Scaffold(
-      backgroundColor: white,
-          body: Center(
+        ?  Scaffold(
+            backgroundColor: darkMode? Colors.black87 : white,
+            body: const Center(
               child: SpinKitWaveSpinner(
                 color: primaryColor,
                 waveColor: primaryColor,
               ),
             ),
-        )
+          )
         : SmartRefresher(
             controller: _refreshController,
             onRefresh: _onRefresh,
@@ -165,20 +166,23 @@ class _ProfileState extends State<Profile> {
               backgroundColor: primaryColor,
             ),
             child: Scaffold(
-              backgroundColor: white,
+              backgroundColor: darkMode? Colors.black87 : white,
               appBar: AppBar(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
                 surfaceTintColor: white,
-                backgroundColor: white,
                 toolbarHeight: 100,
                 actions: [
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(Icons.settings),
+                    icon: const Icon(Icons.settings, color: white,),
                   ),
                 ],
                 title: Text(
                   "Profile",
                   style: TextStyle(
+                    color: white,
                       fontFamily: font,
                       fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).size.width * 0.05),
@@ -194,6 +198,7 @@ class _ProfileState extends State<Profile> {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(
+                            top: 20,
                             bottom: 10,
                           ),
                           height: MediaQuery.of(context).size.height / 5,
@@ -274,6 +279,7 @@ class _ProfileState extends State<Profile> {
                             Text(
                               "Details",
                               style: TextStyle(
+                                color: darkMode? white : black,
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.04,
                                   fontWeight: FontWeight.bold),
@@ -294,10 +300,9 @@ class _ProfileState extends State<Profile> {
                                         address,
                                         _email,
                                         _name,
-                                        _address,
-                                        () {
-                                          getData();
-                                        });
+                                        _address, () {
+                                      getData();
+                                    });
                                   },
                                   minHeight: 0,
                                   initHeight: 0.6,
@@ -306,14 +311,14 @@ class _ProfileState extends State<Profile> {
                                 );
                                 getData();
                               },
-                              icon: const Icon(Icons.edit_note_sharp),
+                              icon:  Icon(Icons.edit_note_sharp,  color: darkMode? white : black),
                             )
                           ],
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        _details(context,name, Icons.person),
+                        _details(context, name, Icons.person),
                         const SizedBox(
                           height: 10,
                         ),
@@ -340,7 +345,7 @@ class _ProfileState extends State<Profile> {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(width: 0.2),
+        border: Border.all(width: 0.2, color: darkMode? white : black),
       ),
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -358,15 +363,16 @@ class _ProfileState extends State<Profile> {
                   const SizedBox(
                     width: 10,
                   ),
-                 Flexible(
-                   child: Text(
-                        title,
-                        style: TextStyle(
+                  Flexible(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        color: darkMode? white : black,
                           overflow: TextOverflow.ellipsis,
-                            fontFamily: font,
-                            fontSize: MediaQuery.of(context).size.width * 0.04),
-                      ),
-                 ),
+                          fontFamily: font,
+                          fontSize: MediaQuery.of(context).size.width * 0.04),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -483,13 +489,14 @@ Widget _buildBottomSheet(
                 child: Padding(
                   padding: const EdgeInsets.all(18),
                   child: Center(
-                      child: Text(
-                    "Save",
-                    style: TextStyle(
-                        fontFamily: font,
-                        color: white,
-                        fontSize: MediaQuery.of(context).size.width * 0.04),
-                  ),),
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                          fontFamily: font,
+                          color: white,
+                          fontSize: MediaQuery.of(context).size.width * 0.04),
+                    ),
+                  ),
                 ),
               ),
             ),

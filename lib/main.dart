@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Splash(),
@@ -57,7 +58,10 @@ class _SplashState extends State<Splash> {
           children: [
             Text(
               "Made with ",
-              style: TextStyle(fontFamily: "Sans Serif", fontSize: 15, color: Colors.white60),
+              style: TextStyle(
+                  fontFamily: "Sans Serif",
+                  fontSize: 15,
+                  color: Colors.white60),
             ),
             Icon(
               Icons.favorite,
@@ -65,7 +69,10 @@ class _SplashState extends State<Splash> {
             ),
             Text(
               " in India.",
-              style: TextStyle(fontFamily: "Sans Serif", fontSize: 15, color: Colors.white60),
+              style: TextStyle(
+                  fontFamily: "Sans Serif",
+                  fontSize: 15,
+                  color: Colors.white60),
             ),
           ],
         ),

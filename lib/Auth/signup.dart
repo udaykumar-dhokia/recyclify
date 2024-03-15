@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:recyclify/Auth/login.dart';
-import 'package:recyclify/Bottombar/bottombar.dart';
+import 'package:recyclify/Components/Bottombar/bottombar.dart';
 import 'package:recyclify/Constants/colors.dart';
 import 'package:recyclify/Constants/fonts.dart';
 import 'package:toastification/toastification.dart';

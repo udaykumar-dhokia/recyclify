@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:recyclify/Auth/signup.dart';
-import 'package:recyclify/Bottombar/bottombar.dart';
+import 'package:recyclify/Components/Bottombar/bottombar.dart';
 import 'package:recyclify/Components/toast.dart';
 import 'package:recyclify/Constants/colors.dart';
 import 'package:recyclify/Constants/fonts.dart';

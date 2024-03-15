@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recyclify/Auth/login.dart';
-import 'package:recyclify/Bottombar/bottombar.dart';
+import 'package:recyclify/Components/Bottombar/bottombar.dart';
 
 class Auth extends StatelessWidget {
   const Auth({super.key});

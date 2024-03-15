@@ -9,7 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:recyclify/Auth/auth.dart';
 import 'package:recyclify/Constants/colors.dart';
 import 'package:recyclify/Constants/fonts.dart';
-import 'package:recyclify/Extras/address.dart';
+import 'package:recyclify/Extras/variables.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -89,6 +89,7 @@ class _HomepageState extends State<Homepage> {
       setState(() {
         userData.add(data["fullname"]);
         userData.add(data["address"]);
+        darkMode = data["darkTheme"];
       });
     });
 
@@ -107,8 +108,8 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return userData.isEmpty
-        ? const Scaffold(
-            backgroundColor: Colors.white,
+        ? Scaffold(
+            backgroundColor: darkMode? Colors.black87 : white,
             body: Center(
               child: SpinKitWaveSpinner(
                 color: primaryColor,
@@ -117,7 +118,7 @@ class _HomepageState extends State<Homepage> {
             ),
           )
         : Scaffold(
-            backgroundColor: white,
+            backgroundColor: darkMode? Colors.black87 : white,
             appBar: AppBar(
               backgroundColor: primaryColor,
               shape: RoundedRectangleBorder(
@@ -205,14 +206,14 @@ class _HomepageState extends State<Homepage> {
                             "${greeting},",
                             style: TextStyle(
                                 fontFamily: font,
-                                color: Colors.black54,
+                                color: darkMode? Colors.white54 : Colors.black54,
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.05),
                           ),
                           Text(userData[0],
                               style: TextStyle(
                                 fontFamily: font,
-                                color: Colors.black,
+                                color: darkMode? white : Colors.black,
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.07,
                                 fontWeight: FontWeight.bold,
@@ -223,12 +224,12 @@ class _HomepageState extends State<Homepage> {
                     Container(
                       margin: const EdgeInsets.only(left: 10, right: 10),
                       padding: const EdgeInsets.only(
-                          left: 10, right: 10, top: 10, bottom: 10),
+                          left: 10, right: 10, top: 20, bottom: 30),
                       // height: MediaQuery.of(context).size.height / 4,
                       width: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: primaryLightColor,
+                        color: darkMode? Colors.black38 : primaryLightColor,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,7 +237,7 @@ class _HomepageState extends State<Homepage> {
                           Text(
                             "what do you want to recyclify.",
                             style: TextStyle(
-                                color: Colors.black54,
+                                color: darkMode? Colors.white54 : Colors.black54,
                                 fontFamily: font,
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.05),
@@ -262,13 +263,14 @@ class _HomepageState extends State<Homepage> {
                                             radius: 80,
                                             child: ClipOval(
                                                 child: Opacity(
-                                                  opacity: selected == "paper"? 1 : 0.5,
-                                                  child: const Image(
-                                                                                                image: NetworkImage(
+                                              opacity:
+                                                  selected == "paper" ? 1 : 0.5,
+                                              child: const Image(
+                                                image: NetworkImage(
                                                     "https://img.freepik.com/premium-vector/newspaper-news-cartoon-vector-illustration-weekly-daily-newspaper-with-articles-flat-icon-outline_385450-1511.jpg"),
-                                                                                                fit: BoxFit.cover,
-                                                                                              ),
-                                                )),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )),
                                           ),
                                         ),
                                       ],
@@ -296,7 +298,9 @@ class _HomepageState extends State<Homepage> {
                                             radius: 80,
                                             child: ClipOval(
                                               child: Opacity(
-                                                opacity: selected == "plastic"? 1 : 0.5,
+                                                opacity: selected == "plastic"
+                                                    ? 1
+                                                    : 0.5,
                                                 child: const Image(
                                                   image: NetworkImage(
                                                       "https://img.freepik.com/free-vector/plastic-pollution-concept-illustration_114360-14999.jpg?size=338&ext=jpg&ga=GA1.1.735520172.1710460800&semt=ais"),
